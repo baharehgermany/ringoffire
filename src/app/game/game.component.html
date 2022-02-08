@@ -1,0 +1,29 @@
+<!-- alle Player autom. anz./  style="top: 130px" durch ng style ersetzen(um alle player versetzt anzuzeigen)/ top.px abstand zwischen spieler-->
+<app-player *ngFor="let player of game.players; let i = index;" [ngStyle]="{'top.px': 100 + (i * 90)}" [playerActiv]="i == game.currentPlayer" [name]="player" class="player-position"></app-player>
+
+<div class="field">
+    <div class="card-stack">
+
+        <!-- card stack -->
+        <!--1. eine schleife bildarray wied./ 2. den abstand zw. karten in px -->
+        <img *ngFor="let c of [0,1,2,3]; let i = index;" [ngStyle]="{'right.px': i * 5}" src="./assets/img/meins/shot-glass.jpg">
+
+        <!--1. onclick function/ 2. klasse f. funktion nur wenn true anzeigen/4. 5*5 nach rechts (zwei klassen wechselnd anzeigen)-->
+        <img (click)="takeCard()" class="top-card" style="right: 25px;" src="./assets/img/meins/shot-glass.jpg">
+
+        <!-- stack for played cards -->
+        <img *ngFor="let card of game.playedCards" class="played-card" src="./assets/img/cards/{{ card }}.png">
+
+        <!-- current card (Animation) -->
+        <!-- 1. immer anzeigen beim clicken (f. einmalig [class.pickCardAnimation])/ 2. if abfrage/5. alle kartenbilder anzeigen- -->
+        <img (click)="takeCard()" *ngIf="pickCardAnimation" class="pick-card" style="right: 25px;" src="./assets/img/cards/{{ currentCard }}.png">
+
+
+    </div>
+</div>
+
+<app-game-info [card]="currentCard" class="pin-bottom"></app-game-info>
+
+<button mat-fab color="primary" (click)="openDialog()" class="btn-add">
+    <mat-icon>add</mat-icon>
+  </button>
